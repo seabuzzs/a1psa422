@@ -209,8 +209,12 @@ h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webki
 .ref a{font-size:13px;word-break:break-word}
 .noresult{color:var(--muted);font-size:14px;padding:8px 0}
 
-footer.note{max-width:1000px;margin:40px auto 0;padding:22px 28px 0;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+footer.note{max-width:1000px;margin:40px auto 0;padding:22px 28px 40px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
 footer.note b{color:var(--text)}
+footer.note .author-link{color:var(--text);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:3px;transition:color .15s ease}
+footer.note .author-link:hover{color:var(--solar)}
+footer.note .author-arrow{width:14px;height:14px;transition:transform .15s ease}
+footer.note .author-link:hover .author-arrow{transform:translate(1px,-1px)}
 
 /* ---------- back to top ---------- */
 .back-to-top{
@@ -314,10 +318,6 @@ footer.note b{color:var(--text)}
   <div class="timeline" id="timeline">
     <div class="spine" aria-hidden="true"></div>
   </div>
-  <footer class="note">
-    <p style="font-size:14px;color:var(--muted);margin-bottom:3px">PSA 422 - EE31S2 / A1 Prelim</p>
-    <p style="font-size:15px;color:var(--text)">submitted by <b>Michael Ardie Laraño</b></p>
-  </footer>
 </section>
 
 <!-- ============ GLOSSARY ============ -->
@@ -384,6 +384,11 @@ footer.note b{color:var(--text)}
     </div>
   </div>
 </section>
+
+<footer class="note">
+  <p style="font-size:14px;color:var(--muted);margin-bottom:3px">PSA 422 - EE31S2 / A1 Prelim</p>
+  <p style="font-size:15px;color:var(--text)">by <a class="author-link" href="https://www.linkedin.com/in/michaelardie/" target="_blank" rel="noopener">Michael Ardie Laraño<svg class="author-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+</footer>
 
 <button id="backtotop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">
   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
