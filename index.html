@@ -106,7 +106,7 @@ h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webki
 
 /* ---------- tab bar ---------- */
 .tabs{
-  position:sticky;top:0;z-index:30;display:flex;gap:2px;
+  position:sticky;top:0;z-index:30;display:flex;justify-content:center;gap:2px;
   max-width:1000px;margin:22px auto 0;padding:0 20px;
   background:var(--bg);border-bottom:1px solid var(--line);
 }
@@ -127,7 +127,7 @@ h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webki
 
 /* ---------- filter bar ---------- */
 .controls{position:sticky;top:50px;z-index:20;background:var(--bg);padding:0 28px;border-bottom:1px solid var(--line)}
-.controls-inner{display:flex;flex-wrap:wrap;align-items:center;gap:9px;padding:16px 0}
+.controls-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:9px;padding:16px 0}
 .controls .hint{font-size:12.5px;color:var(--muted);margin-right:2px;flex:none}
 .chip{
   font:inherit;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;
@@ -248,7 +248,7 @@ footer.note b{color:var(--text)}
   .controls{top:49px;padding:0 20px}
   .timeline{padding:16px 20px 0}
   .reading{padding:20px 20px 0}
-  .controls-inner{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:14px 0;scrollbar-width:thin}
+  .controls-inner{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:14px 0;scrollbar-width:thin}
   .frame{gap:10px}
   .frame .cell{min-width:132px;padding:11px 14px}
   .gtools{gap:10px}
