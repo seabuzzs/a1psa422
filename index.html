@@ -156,23 +156,22 @@ h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webki
 .era p{font-size:13px;color:var(--muted);margin-top:2px;max-width:52ch}
 .era::before{content:"";position:absolute;left:75px;top:6px;width:8px;height:8px;border-radius:50%;
   background:var(--text);box-shadow:0 0 0 4px var(--bg)}
-.item{position:relative;padding:12px 0 12px 96px}
-.item .node{position:absolute;left:73px;top:19px;width:12px;height:12px;border-radius:50%;
+.item{display:flex;align-items:center;gap:7px;padding:12px 0}
+.item .year{flex:none;width:66px;text-align:right;font-size:14px;font-weight:600;color:var(--muted)}
+.item .node{flex:none;width:12px;height:12px;border-radius:50%;
   background:var(--bg);border:2.5px solid var(--cat,var(--muted));
   box-shadow:0 0 0 4px var(--bg),0 0 8px -2px var(--cat,transparent);transition:transform .15s ease}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:11px;overflow:hidden;transition:border-color .15s ease}
-.card-btn{width:100%;text-align:center;font:inherit;color:inherit;cursor:pointer;background:none;border:none;
+.card{background:var(--surface);border:1px solid var(--line);border-radius:11px;overflow:hidden;transition:border-color .15s ease;flex:1;min-width:0;margin-left:4px}
+.card-btn{width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;background:none;border:none;
   padding:15px 17px;display:flex;align-items:center;gap:12px}
 .card-btn:focus-visible{outline:2px solid var(--wind);outline-offset:-2px;border-radius:11px}
 .item:hover .node{transform:scale(1.18)}
 .item:hover .card{border-color:var(--cat,var(--line))}
-.meta{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:6px}
-.meta .year{font-size:13px;font-weight:600;color:var(--muted)}
 .tag{flex:none;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
-  padding:3px 9px;border-radius:5px;color:var(--cat);background:color-mix(in srgb,var(--cat) 15%,transparent)}
-.card-body{flex:1;min-width:0;text-align:center}
-.card-title{display:block;font-size:16.5px;font-weight:700;letter-spacing:-.01em}
-.card-short{display:block;font-size:14px;color:var(--card-desc);margin-top:4px}
+  padding:3px 9px;border-radius:5px;margin-bottom:6px;color:var(--cat);background:color-mix(in srgb,var(--cat) 15%,transparent)}
+.card-body{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center}
+.card-title{display:block;font-size:16.5px;font-weight:700;letter-spacing:-.01em;text-align:left}
+.card-short{display:block;font-size:14px;color:var(--card-desc);margin-top:4px;text-align:left}
 .chev{flex:none;color:var(--muted);transition:transform .2s ease}
 .card.open .chev{transform:rotate(90deg)}
 .eng{max-height:0;overflow:hidden;transition:max-height .28s ease;border-top:1px solid transparent}
@@ -232,8 +231,8 @@ footer.note b{color:var(--text)}
   header{padding:36px 20px 20px}
   .spine{left:50px}
   .era{padding-left:48px}.era::before{left:27px}
-  .item{padding-left:48px}
-  .item .node{left:25px;top:2px}
+  .item{gap:5px}
+  .item .year{width:44px;font-size:12.5px}
   .card-btn{padding:13px 14px}
   .tabs{top:0;padding:0 14px}
   .controls{top:49px;padding:0 20px}
@@ -569,10 +568,11 @@ function renderTimeline(){
       wrap.style.setProperty('--cat',cat.color);
       if(localPrev!==null) wrap.style.marginTop=gapPx(m.year-localPrev)+'px';
       wrap.innerHTML=
+        '<div class="year mono">'+esc(m.display||m.year)+'</div>'+
         '<div class="node"></div>'+
         '<div class="card"><button class="card-btn" aria-expanded="false">'+
           '<span class="card-body">'+
-            '<span class="meta"><span class="year mono">'+esc(m.display||m.year)+'</span><span class="tag">'+esc(cat.label)+'</span></span>'+
+            '<span class="tag">'+esc(cat.label)+'</span>'+
             '<span class="card-title">'+esc(m.title)+'</span>'+
             '<span class="card-short">'+esc(m.short)+'</span>'+
           '</span>'+
@@ -591,7 +591,7 @@ function renderTimeline(){
     });
   });
   if(!tl.querySelector('.item')){
-    const e=document.createElement('div');e.className='item';e.style.paddingLeft='96px';
+    const e=document.createElement('div');e.className='item';
     e.innerHTML='<div class="card"><div class="card-btn" style="cursor:default"><span class="card-body"><span class="card-title">No technologies selected</span><span class="card-short">Turn a filter back on above to see the timeline.</span></span></div></div>';
     tl.appendChild(e);
   }
