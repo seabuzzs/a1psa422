@@ -167,11 +167,12 @@ h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webki
 .card-btn:focus-visible{outline:2px solid var(--wind);outline-offset:-2px;border-radius:11px}
 .item:hover .node{transform:scale(1.18)}
 .item:hover .card{border-color:var(--cat,var(--line))}
-.tag{flex:none;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
   padding:3px 9px;border-radius:5px;margin-bottom:6px;color:var(--cat);background:color-mix(in srgb,var(--cat) 15%,transparent)}
-.card-body{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center}
-.card-title{display:block;font-size:16.5px;font-weight:700;letter-spacing:-.01em;text-align:left}
-.card-short{display:block;font-size:14px;color:var(--card-desc);margin-top:4px;text-align:left}
+.card-body{flex:1;min-width:0;display:flex;justify-content:center}
+.card-copy{min-width:0}
+.card-title{display:block;font-size:16.5px;font-weight:700;letter-spacing:-.01em}
+.card-short{display:block;font-size:14px;color:var(--card-desc);margin-top:4px}
 .chev{flex:none;color:var(--muted);transition:transform .2s ease}
 .card.open .chev{transform:rotate(90deg)}
 .eng{max-height:0;overflow:hidden;transition:max-height .28s ease;border-top:1px solid transparent}
@@ -571,11 +572,11 @@ function renderTimeline(){
         '<div class="year mono">'+esc(m.display||m.year)+'</div>'+
         '<div class="node"></div>'+
         '<div class="card"><button class="card-btn" aria-expanded="false">'+
-          '<span class="card-body">'+
+          '<span class="card-body"><span class="card-copy">'+
             '<span class="tag">'+esc(cat.label)+'</span>'+
             '<span class="card-title">'+esc(m.title)+'</span>'+
             '<span class="card-short">'+esc(m.short)+'</span>'+
-          '</span>'+
+          '</span></span>'+
           '<svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
         '</button><div class="eng" aria-hidden="true"><div class="eng-inner">'+
           '<p>'+esc(m.eng)+'</p>'+
@@ -592,7 +593,7 @@ function renderTimeline(){
   });
   if(!tl.querySelector('.item')){
     const e=document.createElement('div');e.className='item';
-    e.innerHTML='<div class="card"><div class="card-btn" style="cursor:default"><span class="card-body"><span class="card-title">No technologies selected</span><span class="card-short">Turn a filter back on above to see the timeline.</span></span></div></div>';
+    e.innerHTML='<div class="card"><div class="card-btn" style="cursor:default"><span class="card-body"><span class="card-copy"><span class="card-title">No technologies selected</span><span class="card-short">Turn a filter back on above to see the timeline.</span></span></span></div></div>';
     tl.appendChild(e);
   }
 }
