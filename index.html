@@ -92,9 +92,9 @@ header{max-width:1000px;margin:0 auto;padding:56px 28px 26px}
 .theme-toggle:hover{color:var(--text);border-color:var(--muted)}
 .theme-toggle:focus-visible{outline:2px solid var(--wind);outline-offset:2px}
 .theme-toggle svg{width:18px;height:18px}
-h1{font-size:clamp(28px,5vw,50px);font-weight:800;letter-spacing:-.02em;line-height:1.05;max-width:16ch}
+h1{font-size:clamp(28px,5vw,50px);font-weight:800;letter-spacing:-.02em;line-height:1.05}
 h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webkit-background-clip:text;background-clip:text;color:transparent}
-.thesis{margin-top:20px;max-width:60ch;font-size:16.5px;color:var(--thesis)}
+.thesis{margin-top:20px;font-size:16.5px;color:var(--thesis)}
 .thesis b{color:var(--text);font-weight:600}
 .frame{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
 .frame .cell{background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--line);border-radius:10px;padding:13px 17px;min-width:150px}
@@ -156,23 +156,25 @@ h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webki
 .era p{font-size:13px;color:var(--muted);margin-top:2px;max-width:52ch}
 .era::before{content:"";position:absolute;left:75px;top:6px;width:8px;height:8px;border-radius:50%;
   background:var(--text);box-shadow:0 0 0 4px var(--bg)}
-.item{position:relative;padding:12px 0 12px 96px}
-.item .year{position:absolute;left:0;top:15px;width:66px;text-align:right;font-size:14px;font-weight:600;color:var(--muted)}
-.item .node{position:absolute;left:73px;top:19px;width:12px;height:12px;border-radius:50%;
+.item{display:flex;align-items:center;gap:7px;padding:12px 0}
+.item .year{flex:none;width:66px;text-align:right;font-size:14px;font-weight:600;color:var(--muted)}
+.item .node{flex:none;width:12px;height:12px;border-radius:50%;
   background:var(--bg);border:2.5px solid var(--cat,var(--muted));
   box-shadow:0 0 0 4px var(--bg),0 0 8px -2px var(--cat,transparent);transition:transform .15s ease}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:11px;overflow:hidden;transition:border-color .15s ease}
+.card-slot{flex:1;min-width:0;margin-left:4px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:11px;overflow:hidden;transition:border-color .15s ease;width:90%}
 .card-btn{width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;background:none;border:none;
-  padding:15px 17px;display:flex;align-items:flex-start;gap:12px}
+  padding:15px 17px;display:flex;align-items:center;gap:12px}
 .card-btn:focus-visible{outline:2px solid var(--wind);outline-offset:-2px;border-radius:11px}
 .item:hover .node{transform:scale(1.18)}
 .item:hover .card{border-color:var(--cat,var(--line))}
-.tag{flex:none;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
-  padding:3px 9px;border-radius:5px;margin-top:2px;color:var(--cat);background:color-mix(in srgb,var(--cat) 15%,transparent)}
-.card-body{flex:1;min-width:0}
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  padding:3px 9px;border-radius:5px;margin-bottom:6px;color:var(--cat);background:color-mix(in srgb,var(--cat) 15%,transparent)}
+.card-body{flex:1;min-width:0;display:flex;justify-content:center}
+.card-copy{width:100%;min-width:0}
 .card-title{display:block;font-size:16.5px;font-weight:700;letter-spacing:-.01em}
 .card-short{display:block;font-size:14px;color:var(--card-desc);margin-top:4px}
-.chev{flex:none;color:var(--muted);margin-top:4px;transition:transform .2s ease}
+.chev{flex:none;color:var(--muted);transition:transform .2s ease}
 .card.open .chev{transform:rotate(90deg)}
 .eng{max-height:0;overflow:hidden;transition:max-height .28s ease;border-top:1px solid transparent}
 .card.open .eng{max-height:460px;border-top-color:var(--line)}
@@ -231,9 +233,8 @@ footer.note b{color:var(--text)}
   header{padding:36px 20px 20px}
   .spine{left:50px}
   .era{padding-left:48px}.era::before{left:27px}
-  .item{padding-left:48px}
-  .item .year{position:static;width:auto;text-align:left;display:block;margin-bottom:6px}
-  .item .node{left:25px;top:2px}
+  .item{gap:5px}
+  .item .year{width:44px;font-size:12.5px}
   .card-btn{padding:13px 14px}
   .tabs{top:0;padding:0 14px}
   .controls{top:49px;padding:0 20px}
@@ -281,7 +282,7 @@ footer.note b{color:var(--text)}
       <svg id="themeicon" viewBox="0 0 24 24" fill="none" aria-hidden="true"></svg>
     </button>
   </div>
-  <h1>The evolution of <span class="glow">renewable energy</span> systems</h1>
+  <h1>The evolution of<br><span class="glow">renewable energy</span> systems</h1>
   <p class="thesis">For almost 150 years, solar and wind were lab curiosities, too expensive for the grid. Then solar's cost fell about 90% in the 2010s, and by 2020 the IEA called it the <b>cheapest electricity in history</b>. This timeline follows that arc, spaced to scale by year, so the long quiet stretches and the sudden acceleration both read at a glance. Click any milestone to see what happened under the hood.</p>
   <div class="frame">
     <div class="cell"><div class="num a">~115 yrs</div><div class="lbl">from first effect (1839)<br>to first practical cell (1954)</div></div>
@@ -571,14 +572,16 @@ function renderTimeline(){
       wrap.innerHTML=
         '<div class="year mono">'+esc(m.display||m.year)+'</div>'+
         '<div class="node"></div>'+
-        '<div class="card"><button class="card-btn" aria-expanded="false">'+
-          '<span class="tag">'+esc(cat.label)+'</span>'+
-          '<span class="card-body"><span class="card-title">'+esc(m.title)+'</span>'+
-          '<span class="card-short">'+esc(m.short)+'</span></span>'+
+        '<div class="card-slot"><div class="card"><button class="card-btn" aria-expanded="false">'+
+          '<span class="card-body"><span class="card-copy">'+
+            '<span class="tag">'+esc(cat.label)+'</span>'+
+            '<span class="card-title">'+esc(m.title)+'</span>'+
+            '<span class="card-short">'+esc(m.short)+'</span>'+
+          '</span></span>'+
           '<svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
         '</button><div class="eng" aria-hidden="true"><div class="eng-inner">'+
           '<p>'+esc(m.eng)+'</p>'+
-        '</div></div></div>';
+        '</div></div></div></div>';
       const card=wrap.querySelector('.card'),btn=wrap.querySelector('.card-btn'),eng=wrap.querySelector('.eng');
       btn.addEventListener('click',()=>{
         const o=card.classList.toggle('open');
@@ -590,8 +593,8 @@ function renderTimeline(){
     });
   });
   if(!tl.querySelector('.item')){
-    const e=document.createElement('div');e.className='item';e.style.paddingLeft='96px';
-    e.innerHTML='<div class="card"><div class="card-btn" style="cursor:default"><span class="card-body"><span class="card-title">No technologies selected</span><span class="card-short">Turn a filter back on above to see the timeline.</span></span></div></div>';
+    const e=document.createElement('div');e.className='item';
+    e.innerHTML='<div class="card-slot"><div class="card"><div class="card-btn" style="cursor:default"><span class="card-body"><span class="card-copy"><span class="card-title">No technologies selected</span><span class="card-short">Turn a filter back on above to see the timeline.</span></span></span></div></div></div>';
     tl.appendChild(e);
   }
 }
