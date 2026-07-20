@@ -161,7 +161,8 @@ h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webki
 .item .node{flex:none;width:12px;height:12px;border-radius:50%;
   background:var(--bg);border:2.5px solid var(--cat,var(--muted));
   box-shadow:0 0 0 4px var(--bg),0 0 8px -2px var(--cat,transparent);transition:transform .15s ease}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:11px;overflow:hidden;transition:border-color .15s ease;flex:1;min-width:0;margin-left:4px}
+.card-slot{flex:1;min-width:0;margin-left:4px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:11px;overflow:hidden;transition:border-color .15s ease;width:90%}
 .card-btn{width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;background:none;border:none;
   padding:15px 17px;display:flex;align-items:center;gap:12px}
 .card-btn:focus-visible{outline:2px solid var(--wind);outline-offset:-2px;border-radius:11px}
@@ -571,7 +572,7 @@ function renderTimeline(){
       wrap.innerHTML=
         '<div class="year mono">'+esc(m.display||m.year)+'</div>'+
         '<div class="node"></div>'+
-        '<div class="card"><button class="card-btn" aria-expanded="false">'+
+        '<div class="card-slot"><div class="card"><button class="card-btn" aria-expanded="false">'+
           '<span class="card-body"><span class="card-copy">'+
             '<span class="tag">'+esc(cat.label)+'</span>'+
             '<span class="card-title">'+esc(m.title)+'</span>'+
@@ -580,7 +581,7 @@ function renderTimeline(){
           '<svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
         '</button><div class="eng" aria-hidden="true"><div class="eng-inner">'+
           '<p>'+esc(m.eng)+'</p>'+
-        '</div></div></div>';
+        '</div></div></div></div>';
       const card=wrap.querySelector('.card'),btn=wrap.querySelector('.card-btn'),eng=wrap.querySelector('.eng');
       btn.addEventListener('click',()=>{
         const o=card.classList.toggle('open');
@@ -593,7 +594,7 @@ function renderTimeline(){
   });
   if(!tl.querySelector('.item')){
     const e=document.createElement('div');e.className='item';
-    e.innerHTML='<div class="card"><div class="card-btn" style="cursor:default"><span class="card-body"><span class="card-copy"><span class="card-title">No technologies selected</span><span class="card-short">Turn a filter back on above to see the timeline.</span></span></span></div></div>';
+    e.innerHTML='<div class="card-slot"><div class="card"><div class="card-btn" style="cursor:default"><span class="card-body"><span class="card-copy"><span class="card-title">No technologies selected</span><span class="card-short">Turn a filter back on above to see the timeline.</span></span></span></div></div></div>';
     tl.appendChild(e);
   }
 }
