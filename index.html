@@ -134,7 +134,7 @@ h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webki
   background:var(--surface);color:var(--muted);border:1px solid var(--line);border-radius:7px;
   padding:6px 13px;transition:all .18s ease;flex:none;
 }
-.chip .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none;transition:box-shadow .18s ease}
+.chip .icon{font-size:13px;line-height:1;flex:none}
 .chip:hover{border-color:var(--muted);color:var(--text)}
 .chip[aria-pressed="true"]{
   color:var(--cat);border-color:var(--cat);
@@ -142,7 +142,6 @@ h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webki
   background:color-mix(in srgb,var(--cat) 12%,var(--surface));
   box-shadow:0 0 0 1px var(--cat);
 }
-.chip[aria-pressed="true"] .dot{box-shadow:0 0 6px 1px var(--cat)}
 .chip[aria-pressed="true"]:hover{border-color:var(--cat)}
 .chip:focus-visible{outline:2px solid var(--wind);outline-offset:2px}
 
@@ -417,13 +416,13 @@ themeBtn.addEventListener('click',()=>{
 
 /* ===================== TIMELINE CONTENT ===================== */
 const CATEGORIES = {
-  solar:      { label:"Solar",          color:"var(--solar)" },
-  wind:       { label:"Wind",           color:"var(--wind)" },
-  hydro:      { label:"Hydro",          color:"var(--hydro)" },
-  geothermal: { label:"Geothermal",     color:"var(--geothermal)" },
-  ocean:      { label:"Ocean",          color:"var(--ocean)" },
-  storage:    { label:"Storage & grid", color:"var(--storage)" },
-  policy:     { label:"Policy",         color:"var(--policy)" },
+  solar:      { label:"Solar",          color:"var(--solar)",      icon:"☀️" },
+  wind:       { label:"Wind",           color:"var(--wind)",       icon:"💨" },
+  hydro:      { label:"Hydro",          color:"var(--hydro)",      icon:"💧" },
+  geothermal: { label:"Geothermal",     color:"var(--geothermal)", icon:"🌋" },
+  ocean:      { label:"Ocean",          color:"var(--ocean)",      icon:"🌊" },
+  storage:    { label:"Storage & grid", color:"var(--storage)",    icon:"🔋" },
+  policy:     { label:"Policy",         color:"var(--policy)",     icon:"⚖️" },
 };
 const ERAS = [
   { id:"curiosity", label:"The Curiosity Era",
@@ -538,7 +537,7 @@ Object.entries(CATEGORIES).forEach(([key,c])=>{
   const b=document.createElement('button');
   b.className='chip';b.type='button';b.setAttribute('aria-pressed','true');
   b.dataset.cat=key;b.style.setProperty('--cat',c.color);
-  b.innerHTML='<span class="dot"></span>'+esc(c.label);
+  b.innerHTML='<span class="icon" aria-hidden="true">'+c.icon+'</span>'+esc(c.label);
   b.addEventListener('click',()=>{
     if(active.has(key)){active.delete(key);b.setAttribute('aria-pressed','false');}
     else{active.add(key);b.setAttribute('aria-pressed','true');}
