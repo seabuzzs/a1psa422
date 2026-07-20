@@ -78,14 +78,14 @@ body{
 a{color:var(--wind)}
 
 /* ---------- header ---------- */
-header{max-width:1000px;margin:0 auto;padding:56px 28px 26px}
-.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+header{max-width:1000px;margin:0 auto;padding:56px 28px 26px;position:relative;text-align:center}
+.header-top{display:block}
 .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;
-  display:flex;align-items:center;gap:9px}
+  display:flex;align-items:center;justify-content:center;gap:9px;text-align:left}
 .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--solar);
   box-shadow:0 0 6px 1px var(--solar)}
 .theme-toggle{
-  flex:none;display:inline-flex;align-items:center;justify-content:center;gap:0;
+  position:absolute;top:56px;right:28px;display:inline-flex;align-items:center;justify-content:center;gap:0;
   width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);
   color:var(--muted);cursor:pointer;transition:all .18s ease;
 }
@@ -238,6 +238,7 @@ footer.note b{color:var(--text)}
 
 @media (max-width:620px){
   header{padding:36px 20px 20px}
+  .theme-toggle{top:36px;right:20px}
   .spine{left:50px}
   .era{padding-left:48px}.era::before{left:27px}
   .item{gap:5px}
