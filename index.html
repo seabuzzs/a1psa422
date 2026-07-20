@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Evolution of Renewable Energy Systems</title>
+<style>
+/* ============================================================
+   EDIT CONTENT IN THE <script> BLOCK NEAR THE BOTTOM:
+     MILESTONES  -> the timeline entries
+     GLOSSARY    -> the glossary terms
+   References are plain HTML in the References tab, edit inline.
+   Single self-contained file. Works offline.
+   ============================================================ */
+
+:root{
+  --bg:#0A0D13;
+  --bg-glow:#152544;
+  --grid-line:rgba(255,255,255,.035);
+  --surface:#121722;
+  --surface-hi:#182031;
+  --line:#232C40;
+  --text:#E8ECF4;
+  --muted:#828EA3;
+  --thesis:#B9C2D4;
+  --card-desc:#B4BECE;
+
+  --solar:#F5B23C;
+  --wind:#4FCFC2;
+  --hydro:#4E9BEA;
+  --geothermal:#FF6E4C;
+  --ocean:#26AEBD;
+  --storage:#A98BFA;
+  --policy:#B7C1D4;
+}
+:root[data-theme="light"]{
+  --bg:#F2F4F8;
+  --bg-glow:#DCE6FA;
+  --grid-line:rgba(20,30,55,.05);
+  --surface:#FFFFFF;
+  --surface-hi:#EEF1F7;
+  --line:#DBE0EA;
+  --text:#12151D;
+  --muted:#5B6474;
+  --thesis:#3A4152;
+  --card-desc:#454E60;
+
+  --solar:#A8690A;
+  --wind:#0E8F82;
+  --hydro:#1D63C4;
+  --geothermal:#C43A1F;
+  --ocean:#0B7480;
+  --storage:#6B46C1;
+  --policy:#48505F;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#F2F4F8; --bg-glow:#DCE6FA; --grid-line:rgba(20,30,55,.05);
+    --surface:#FFFFFF; --surface-hi:#EEF1F7; --line:#DBE0EA;
+    --text:#12151D; --muted:#5B6474; --thesis:#3A4152; --card-desc:#454E60;
+    --solar:#A8690A; --wind:#0E8F82; --hydro:#1D63C4; --geothermal:#C43A1F;
+    --ocean:#0B7480; --storage:#6B46C1; --policy:#48505F;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:
+    radial-gradient(1100px 560px at 72% -8%, var(--bg-glow) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 42px),
+    repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 42px),
+    var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.5;-webkit-font-smoothing:antialiased;padding:0 0 90px;
+  transition:background-color .2s ease,color .2s ease;
+}
+.mono{font-family:"SF Mono",SFMono-Regular,ui-monospace,"Roboto Mono",Consolas,Menlo,monospace}
+a{color:var(--wind)}
+
+/* ---------- header ---------- */
+header{max-width:1000px;margin:0 auto;padding:56px 28px 26px}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;
+  display:flex;align-items:center;gap:9px}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--solar);
+  box-shadow:0 0 6px 1px var(--solar)}
+.theme-toggle{
+  flex:none;display:inline-flex;align-items:center;justify-content:center;gap:0;
+  width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);
+  color:var(--muted);cursor:pointer;transition:all .18s ease;
+}
+.theme-toggle:hover{color:var(--text);border-color:var(--muted)}
+.theme-toggle:focus-visible{outline:2px solid var(--wind);outline-offset:2px}
+.theme-toggle svg{width:18px;height:18px}
+h1{font-size:clamp(28px,5vw,50px);font-weight:800;letter-spacing:-.02em;line-height:1.05;max-width:16ch}
+h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webkit-background-clip:text;background-clip:text;color:transparent}
+.thesis{margin-top:20px;max-width:60ch;font-size:16.5px;color:var(--thesis)}
+.thesis b{color:var(--text);font-weight:600}
+.frame{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
+.frame .cell{background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--line);border-radius:10px;padding:13px 17px;min-width:150px}
+.frame .num{font-family:"SF Mono",SFMono-Regular,ui-monospace,"Roboto Mono",Consolas,Menlo,monospace;font-size:22px;font-weight:700;letter-spacing:-.01em}
+.frame .num.a{color:var(--muted)} .frame .num.b{color:var(--solar)}
+.frame .lbl{font-size:12.5px;color:var(--muted);margin-top:3px}
+.frame .chart-cell{min-width:180px}
+.cost-chart{width:100%;height:32px;display:block;margin-bottom:6px;overflow:visible}
+
+/* ---------- tab bar ---------- */
+.tabs{
+  position:sticky;top:0;z-index:30;display:flex;gap:2px;
+  max-width:1000px;margin:22px auto 0;padding:0 20px;
+  background:var(--bg);border-bottom:1px solid var(--line);
+}
+.tab{
+  font:inherit;font-size:14px;font-weight:600;cursor:pointer;background:none;border:none;
+  color:var(--muted);padding:15px 16px 13px;position:relative;
+}
+.tab[aria-selected="true"]{color:var(--text)}
+.tab[aria-selected="true"]::after{
+  content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;
+  background:linear-gradient(90deg,var(--solar),var(--geothermal));box-shadow:0 0 8px -1px var(--solar);
+}
+.tab:hover{color:var(--text)}
+.tab:focus-visible{outline:2px solid var(--wind);outline-offset:-3px;border-radius:6px}
+
+.panel{max-width:1000px;margin:0 auto}
+.panel[hidden]{display:none}
+
+/* ---------- filter bar ---------- */
+.controls{position:sticky;top:50px;z-index:20;background:var(--bg);padding:0 28px}
+.controls-inner{display:flex;flex-wrap:wrap;align-items:center;gap:9px;padding:16px 0;border-bottom:1px solid var(--line)}
+.controls .hint{font-size:12.5px;color:var(--muted);margin-right:2px;flex:none}
+.chip{
+  font:inherit;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;
+  background:var(--surface);color:var(--muted);border:1px solid var(--line);border-radius:7px;
+  padding:6px 13px;transition:all .18s ease;flex:none;
+}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none;transition:box-shadow .18s ease}
+.chip:hover{border-color:var(--muted);color:var(--text)}
+.chip[aria-pressed="true"]{
+  color:var(--cat);border-color:var(--cat);
+  background:var(--surface-hi);
+  background:color-mix(in srgb,var(--cat) 12%,var(--surface));
+  box-shadow:0 0 0 1px var(--cat);
+}
+.chip[aria-pressed="true"] .dot{box-shadow:0 0 6px 1px var(--cat)}
+.chip[aria-pressed="true"]:hover{border-color:var(--cat)}
+.chip:focus-visible{outline:2px solid var(--wind);outline-offset:2px}
+
+/* ---------- timeline ---------- */
+.timeline{padding:20px 28px 0;position:relative}
+.spine{position:absolute;left:calc(28px + 78px);top:30px;bottom:40px;width:2px;
+  background:linear-gradient(to bottom,var(--line) 0%,var(--line) 8%,#3a4a6e 55%,var(--solar) 100%);opacity:.5}
+:root[data-theme="light"] .spine{opacity:.3}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .spine{opacity:.3}}
+.era{margin:34px 0 34px;padding-left:96px;position:relative}
+.era h2{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--text);font-weight:700}
+.era p{font-size:13px;color:var(--muted);margin-top:2px;max-width:52ch}
+.era::before{content:"";position:absolute;left:75px;top:6px;width:8px;height:8px;border-radius:50%;
+  background:var(--text);box-shadow:0 0 0 4px var(--bg)}
+.item{position:relative;padding:12px 0 12px 96px}
+.item .year{position:absolute;left:0;top:15px;width:66px;text-align:right;font-size:14px;font-weight:600;color:var(--muted)}
+.item .node{position:absolute;left:73px;top:19px;width:12px;height:12px;border-radius:50%;
+  background:var(--bg);border:2.5px solid var(--cat,var(--muted));
+  box-shadow:0 0 0 4px var(--bg),0 0 8px -2px var(--cat,transparent);transition:transform .15s ease}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:11px;overflow:hidden;transition:border-color .15s ease}
+.card-btn{width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;background:none;border:none;
+  padding:15px 17px;display:flex;align-items:flex-start;gap:12px}
+.card-btn:focus-visible{outline:2px solid var(--wind);outline-offset:-2px;border-radius:11px}
+.item:hover .node{transform:scale(1.18)}
+.item:hover .card{border-color:var(--cat,var(--line))}
+.tag{flex:none;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  padding:3px 9px;border-radius:5px;margin-top:2px;color:var(--cat);background:color-mix(in srgb,var(--cat) 15%,transparent)}
+.card-body{flex:1;min-width:0}
+.card-title{display:block;font-size:16.5px;font-weight:700;letter-spacing:-.01em}
+.card-short{display:block;font-size:14px;color:var(--card-desc);margin-top:4px}
+.chev{flex:none;color:var(--muted);margin-top:4px;transition:transform .2s ease}
+.card.open .chev{transform:rotate(90deg)}
+.eng{max-height:0;overflow:hidden;transition:max-height .28s ease;border-top:1px solid transparent}
+.card.open .eng{max-height:460px;border-top-color:var(--line)}
+.eng-inner{padding:14px 17px 16px}
+.eng-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cat,var(--muted));font-weight:700;margin-bottom:6px}
+.eng-inner p{font-size:14px;color:var(--card-desc)}
+
+/* ---------- glossary & references ---------- */
+.reading{padding:26px 28px 0}
+.reading .intro{color:var(--thesis);font-size:15px;max-width:66ch;margin-bottom:20px}
+.search{width:100%;max-width:420px;font:inherit;font-size:14px;background:var(--surface);
+  border:1px solid var(--line);border-radius:10px;color:var(--text);padding:10px 14px;margin-bottom:24px}
+.search:focus{outline:2px solid var(--wind);outline-offset:1px;border-color:var(--wind)}
+.group{margin-bottom:28px}
+.group h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:12px}
+.term,.ref{padding:11px 0;border-bottom:1px solid var(--line)}
+.term dt{font-size:15.5px;font-weight:700;color:var(--text);margin-bottom:3px}
+.term dd{font-size:14px;color:var(--card-desc);margin:0}
+.term-ex{font-size:13px;color:var(--muted);font-style:italic;margin-top:5px}
+#glossary.hide-ex .term-ex{display:none}
+.gtools{display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.gtools .search{margin-bottom:0}
+.ex-toggle{display:inline-flex;align-items:center;gap:8px;margin-left:auto;flex:none;font-size:13.5px;color:var(--muted)}
+.ex-toggle .lbl{white-space:nowrap}
+.qmark{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;padding:0;transition:all .18s ease}
+.qmark:hover{border-color:var(--muted);color:var(--text)}
+.qmark[aria-checked="true"]{color:var(--solar);border-color:var(--solar);background:var(--surface-hi);background:color-mix(in srgb,var(--solar) 16%,var(--surface))}
+.qmark[aria-checked="true"]:hover{border-color:var(--solar);color:var(--solar)}
+.qmark:focus-visible{outline:2px solid var(--wind);outline-offset:2px}
+.term.hidden,.group.hidden{display:none}
+.ref .r-title{font-weight:600;color:var(--text);font-size:14.5px}
+.ref .r-org{color:var(--muted);font-size:13px;margin-top:2px}
+.ref a{font-size:13px;word-break:break-word}
+.noresult{color:var(--muted);font-size:14px;padding:8px 0}
+
+footer.note{max-width:1000px;margin:40px auto 0;padding:22px 28px 0;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+footer.note b{color:var(--text)}
+
+/* ---------- back to top ---------- */
+.back-to-top{
+  position:fixed;right:22px;bottom:22px;z-index:40;
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--surface);border:1px solid var(--line);color:var(--text);
+  cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);
+  opacity:0;pointer-events:none;transform:translateY(8px);
+  transition:opacity .18s ease,transform .18s ease,border-color .18s ease;
+}
+.back-to-top.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.back-to-top:hover{border-color:var(--muted)}
+.back-to-top:focus-visible{outline:2px solid var(--wind);outline-offset:2px}
+.back-to-top svg{width:18px;height:18px}
+
+@media (max-width:620px){
+  header{padding:36px 20px 20px}
+  .spine{left:50px}
+  .era{padding-left:48px}.era::before{left:27px}
+  .item{padding-left:48px}
+  .item .year{position:static;width:auto;text-align:left;display:block;margin-bottom:6px}
+  .item .node{left:25px;top:2px}
+  .card-btn{padding:13px 14px}
+  .tabs{top:0;padding:0 14px}
+  .controls{top:49px;padding:0 20px}
+  .timeline{padding:16px 20px 0}
+  .reading{padding:20px 20px 0}
+  .controls-inner{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:14px 0;scrollbar-width:thin}
+  .frame{gap:10px}
+  .frame .cell{min-width:132px;padding:11px 14px}
+  .gtools{gap:10px}
+  .ex-toggle{margin-left:0}
+}
+@media (max-width:400px){
+  h1{max-width:none}
+  .frame .cell{min-width:44%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+@media print{
+  :root{
+    --bg:#fff !important; --bg-glow:#fff !important; --grid-line:transparent !important;
+    --surface:#fff !important; --surface-hi:#fff !important; --line:#ccc !important;
+    --text:#111 !important; --muted:#444 !important; --thesis:#222 !important; --card-desc:#222 !important;
+    --solar:#8a5a00 !important; --wind:#0e6a62 !important; --hydro:#154f96 !important; --geothermal:#9c2c15 !important;
+    --ocean:#0a5a63 !important; --storage:#4d3399 !important; --policy:#333 !important;
+  }
+  body{padding:0}
+  .theme-toggle,.tabs,.controls{display:none}
+  .spine{display:none}
+  .card{border-color:#ccc;break-inside:avoid}
+  .card .eng{max-height:none!important;border-top-color:#ccc!important}
+  .chev{display:none}
+  a{color:#111;text-decoration:underline}
+  a[href]::after{content:" (" attr(href) ")";font-size:11px;color:#555}
+  *{box-shadow:none!important;text-shadow:none!important}
+  .back-to-top{display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="eyebrow">PSA 422 &middot; Renewable Energy Systems Integration</div>
+    <button id="themetoggle" class="theme-toggle" type="button" aria-label="Switch to light theme" title="Switch theme">
+      <svg id="themeicon" viewBox="0 0 24 24" fill="none" aria-hidden="true"></svg>
+    </button>
+  </div>
+  <h1>The evolution of <span class="glow">renewable energy</span> systems</h1>
+  <p class="thesis">For almost 150 years, solar and wind were lab curiosities, too expensive for the grid. Then solar's cost fell about 90% in the 2010s, and by 2020 the IEA called it the <b>cheapest electricity in history</b>. This timeline follows that arc, spaced to scale by year, so the long quiet stretches and the sudden acceleration both read at a glance. Click any milestone to see what happened under the hood.</p>
+  <div class="frame">
+    <div class="cell"><div class="num a">~115 yrs</div><div class="lbl">from first effect (1839)<br>to first practical cell (1954)</div></div>
+    <div class="cell"><div class="num b">90%</div><div class="lbl">fall in solar LCOE<br>2010&ndash;2023 (IRENA)</div></div>
+    <div class="cell"><div class="num">92.5%</div><div class="lbl">of all new power capacity<br>added in 2024 was renewable</div></div>
+    <div class="cell chart-cell">
+      <svg class="cost-chart" viewBox="0 0 120 40" preserveAspectRatio="none" role="img" aria-labelledby="costChartTitle">
+        <title id="costChartTitle">Illustrative decline in utility-scale solar cost from about $0.46 to $0.044 per kWh, 2010 to 2023, per IRENA</title>
+        <polyline points="4,4 21.2,19.2 47.1,27.8 64.3,30.7 90.2,33.1 116,34" fill="none" stroke="var(--solar)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="116" cy="34" r="2.6" fill="var(--solar)"/>
+      </svg>
+      <div class="lbl">Solar LCOE, 2010&rarr;2023 <span class="mono" style="color:var(--muted)">(illustrative curve)</span><br><span class="mono" style="color:var(--text)">$0.46 &rarr; $0.044/kWh</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button class="tab" role="tab" aria-selected="true"  data-tab="timeline">Timeline</button>
+  <button class="tab" role="tab" aria-selected="false" data-tab="glossary">Glossary</button>
+  <button class="tab" role="tab" aria-selected="false" data-tab="references">References</button>
+</nav>
+
+<!-- ============ TIMELINE ============ -->
+<section class="panel" id="tab-timeline" role="tabpanel">
+  <div class="controls">
+    <div class="controls-inner" id="filters">
+      <span class="hint">Filter by technology:</span>
+    </div>
+  </div>
+  <div class="timeline" id="timeline">
+    <div class="spine" aria-hidden="true"></div>
+  </div>
+  <footer class="note">
+    <p style="font-size:14px;color:var(--muted);margin-bottom:3px">PSA 422 - EE31S2 / A1 Prelim</p>
+    <p style="font-size:15px;color:var(--text)">submitted by <b>Michael Ardie Laraño</b></p>
+  </footer>
+</section>
+
+<!-- ============ GLOSSARY ============ -->
+<section class="panel" id="tab-glossary" role="tabpanel" hidden>
+  <div class="reading">
+    <p class="intro">Definition of terms used across the timeline. Type to filter.</p>
+    <div class="gtools">
+      <input class="search" id="gsearch" type="search" placeholder="Search terms&hellip; (e.g. inverter, LCOE, inertia)" aria-label="Search glossary">
+      <div class="ex-toggle">
+        <span class="lbl">wdym?</span>
+        <button id="extoggle" class="qmark" role="switch" aria-checked="true" title="Show or hide plain-language examples" aria-label="Show or hide plain-language examples">?</button>
+      </div>
+    </div>
+    <div id="glossary"></div>
+    <div class="noresult" id="gnone" hidden>No terms match that search.</div>
+  </div>
+</section>
+
+<!-- ============ REFERENCES ============ -->
+<section class="panel" id="tab-references" role="tabpanel" hidden>
+  <div class="reading">
+    <p class="intro">Sources behind the dates and figures in this timeline.</p>
+
+    <div class="group">
+      <h3>Capacity, generation &amp; cost data</h3>
+      <div class="ref"><div class="r-title">Global Electricity Review 2025</div><div class="r-org">Ember: renewables about 32% of generation; low-carbon 40.9% of the 2024 mix</div><a href="https://ember-energy.org/latest-insights/global-electricity-review-2025/" target="_blank" rel="noopener">ember-energy.org</a></div>
+      <div class="ref"><div class="r-title">Lithium-ion battery pack price survey</div><div class="r-org">BloombergNEF: pack prices down about 93% since 2010</div><a href="https://about.bnef.com/insights/clean-transport/lithium-ion-battery-pack-prices-fall-to-108-per-kilowatt-hour-despite-rising-metal-prices-bloombergnef/" target="_blank" rel="noopener">about.bnef.com</a></div>
+      <div class="ref"><div class="r-title">Record-Breaking Annual Growth in Renewable Power Capacity (2025)</div><div class="r-org">IRENA: 4,448 GW total; 92.5% of 2024 additions renewable</div><a href="https://www.irena.org/News/pressreleases/2025/Mar/Record-Breaking-Annual-Growth-in-Renewable-Power-Capacity" target="_blank" rel="noopener">irena.org</a></div>
+      <div class="ref"><div class="r-title">Renewable Power Generation Costs in 2023</div><div class="r-org">IRENA: utility-scale solar LCOE fell 90% (2010&ndash;2023), $0.460 to $0.044/kWh</div><a href="https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2024/Sep/IRENA_Renewable_power_generation_costs_in_2023.pdf" target="_blank" rel="noopener">irena.org (PDF)</a></div>
+      <div class="ref"><div class="r-title">World Energy Outlook 2020</div><div class="r-org">IEA: "solar PV is now the cheapest source of electricity in history"</div><a href="https://www.iea.org/reports/world-energy-outlook-2020" target="_blank" rel="noopener">iea.org</a></div>
+
+    </div>
+
+    <div class="group">
+      <h3>Technology &amp; efficiency</h3>
+      <div class="ref"><div class="r-title">Best Research-Cell Efficiency Chart</div><div class="r-org">NLR (National Laboratory of the Rockies, formerly NREL): the reference record of solar cell efficiency (1954&ndash;present)</div><a href="https://www.nlr.gov/pv/cell-efficiency" target="_blank" rel="noopener">nlr.gov/pv/cell-efficiency</a></div>
+      <div class="ref"><div class="r-title">Power Tower CSP Basics</div><div class="r-org">U.S. Department of Energy: concentrated solar-thermal fundamentals</div><a href="https://www.energy.gov/cmei/systems/power-tower-system-concentrating-solar-thermal-power-basics" target="_blank" rel="noopener">energy.gov</a></div>
+      <div class="ref"><div class="r-title">Solar power plants in the Mojave Desert</div><div class="r-org">SEGS (Luz International) and Ivanpah project details</div><a href="https://en.wikipedia.org/wiki/Solar_power_plants_in_the_Mojave_Desert" target="_blank" rel="noopener">wikipedia.org</a></div>
+    </div>
+
+    <div class="group">
+      <h3>Historical milestones</h3>
+      <div class="ref"><div class="r-title">Piero Ginori Conti / first geothermal power</div><div class="r-org">Larderello, Italy (1904 demo, 1913 plant)</div><a href="https://en.wikipedia.org/wiki/Piero_Ginori_Conti" target="_blank" rel="noopener">wikipedia.org</a> &middot; <a href="https://eos.org/features/the-century-old-renewable-youve-never-heard-of" target="_blank" rel="noopener">eos.org</a></div>
+      <div class="ref"><div class="r-title">Rance Tidal Power Station &amp; Wave power</div><div class="r-org">La Rance (1966, 240 MW); OTEC and wave-energy history</div><a href="https://tethys.pnnl.gov/project-sites/la-rance-tidal-barrage" target="_blank" rel="noopener">tethys.pnnl.gov</a> &middot; <a href="https://en.wikipedia.org/wiki/Wave_power" target="_blank" rel="noopener">wikipedia.org</a></div>
+      <div class="ref"><div class="r-title">Vindeby Offshore Wind Farm</div><div class="r-org">World's first offshore wind farm (Denmark, 1991, 4.95 MW)</div><a href="https://tethys.pnnl.gov/wind-project-sites/vindeby-offshore-wind-farm" target="_blank" rel="noopener">tethys.pnnl.gov</a></div>
+      <div class="ref"><div class="r-title">Vulcan Street Power Plant</div><div class="r-org">ASME Engineering Landmark: first hydroelectric station (1882)</div><a href="https://www.asme.org/about-asme/engineering-history/landmarks/29-vulcan-street-power-plant" target="_blank" rel="noopener">asme.org</a></div>
+
+    </div>
+
+    <div class="group">
+      <h3>Geothermal &amp; the Philippines</h3>
+      <div class="ref"><div class="r-title">Renewable Energy Act of 2008 (RA 9513)</div><div class="r-org">Republic of the Philippines: FiT, RPS, and RE incentives; NREP targets</div><a href="https://doe.gov.ph/articles/2984756--department-circular-no-dc2025-09-0014?title=Department%20Circular%20No.%20DC2025-09-0014,%20entitled%20%E2%80%9CPrescribing%20Amendments%20to%20Department%20Circular%20No.%20DC2009-05-0008%20titled,%20%E2%80%98Rules%20and%20Regulations%20Implementing%20Republic%20Act%20No.%209513,%20otherwise%20known%20as%20the%20Renewable%20Energy%20Act%20of%202008%E2%80%99%E2%80%9D" target="_blank" rel="noopener">doe.gov.ph</a></div>
+      <div class="ref"><div class="r-title">Top 10 Geothermal Countries 2024</div><div class="r-org">ThinkGeoEnergy: Philippines #3 (1,984 MW), after the US and Indonesia</div><a href="https://www.thinkgeoenergy.com/thinkgeoenergys-top-10-geothermal-countries-2024-power/" target="_blank" rel="noopener">thinkgeoenergy.com</a></div>
+
+    </div>
+
+    <div class="group">
+      <h3>Notes: disputed or commonly-mistaken claims</h3>
+      <p class="intro" style="font-size:13.5px;margin-bottom:12px">Several "facts" repeated across popular sources are wrong or contested. This timeline uses the corrected versions below.</p>
+      <div class="ref"><div class="r-title">The 1839 discoverer was Edmond Becquerel</div><div class="r-org">Not his father Antoine-César, nor his son Henri, who discovered radioactivity. The three are often confused.</div></div>
+      <div class="ref"><div class="r-title">The "first" wind turbine is contested</div><div class="r-org">James Blyth (Scotland, 1887) vs. Charles Brush (Cleveland, 1888). Brush's is best described as the first automatically operated one.</div></div>
+      <div class="ref"><div class="r-title">La Rance's capacity factor is 24 to 28%</div><div class="r-org">Not the 40% some promotional sources claim.</div></div>
+      <div class="ref"><div class="r-title">The Philippines is now the 3rd-largest geothermal producer</div><div class="r-org">Indonesia overtook it around 2018; it was long #2. As of 2024: US #1, Indonesia #2, Philippines #3.</div></div>
+    </div>
+  </div>
+</section>
+
+<button id="backtotop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+/* ===================== THEME ===================== */
+const SUN='<circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.85 1.85M17.55 17.55l1.85 1.85M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.85-1.85M17.55 6.45l1.85-1.85" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>';
+const MOON='<path d="M20 14.2A8.5 8.5 0 1 1 9.8 4a6.6 6.6 0 0 0 10.2 10.2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>';
+const root=document.documentElement;
+const themeBtn=document.getElementById('themetoggle');
+const themeIcon=document.getElementById('themeicon');
+function systemPrefersLight(){return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;}
+function currentTheme(){
+  const saved=localStorage.getItem('ret-theme');
+  if(saved==='light'||saved==='dark') return saved;
+  return systemPrefersLight()?'light':'dark';
+}
+function applyTheme(t){
+  root.setAttribute('data-theme',t);
+  themeIcon.innerHTML = t==='light' ? MOON : SUN;
+  themeBtn.setAttribute('aria-label', t==='light' ? 'Switch to dark theme' : 'Switch to light theme');
+}
+applyTheme(currentTheme());
+themeBtn.addEventListener('click',()=>{
+  const next = root.getAttribute('data-theme')==='light' ? 'dark' : 'light';
+  localStorage.setItem('ret-theme', next);
+  applyTheme(next);
+});
+
+/* ===================== TIMELINE CONTENT ===================== */
+const CATEGORIES = {
+  solar:      { label:"Solar",          color:"var(--solar)" },
+  wind:       { label:"Wind",           color:"var(--wind)" },
+  hydro:      { label:"Hydro",          color:"var(--hydro)" },
+  geothermal: { label:"Geothermal",     color:"var(--geothermal)" },
+  ocean:      { label:"Ocean",          color:"var(--ocean)" },
+  storage:    { label:"Storage & grid", color:"var(--storage)" },
+  policy:     { label:"Policy",         color:"var(--policy)" },
+};
+const ERAS = [
+  { id:"curiosity", label:"The Curiosity Era",
+    sub:"1839–1950 · The physics is discovered, then sits mostly idle. Everything here is a first-of-its-kind demonstration, not an industry." },
+  { id:"strategic", label:"The Strategic Era",
+    sub:"1954–1999 · Real devices arrive. Space and oil shocks give renewables a reason to exist, but they're still niche and expensive." },
+  { id:"collapse", label:"The Cost-Collapse & Integration Era",
+    sub:"2000–now · Policy creates demand, manufacturing scale crushes the price, and the hard question flips to integrating it all into the grid." },
+];
+const MILESTONES = [
+  { year:1839, title:"The photovoltaic effect is discovered", cat:"solar", era:"curiosity",
+    short:"A 19-year-old in France, Edmond Becquerel, notices that light on the right material makes an electric current appear. No moving parts, no burning; just light in, current out.",
+    eng:"Becquerel measured a small voltage when he shone light on an electrode sitting in a liquid. It is the same basic effect every solar cell still uses: light knocks tiny charges loose and they flow as current. There was no way yet to make it strong or cheap, so it stayed a laboratory curiosity for over a century." },
+  { year:1882, title:"First hydroelectric plant goes online", cat:"hydro", era:"curiosity",
+    short:"The world's first renewable power plant: a small station on a river in Appleton, Wisconsin, USA, lighting real homes and a paper mill. It opened weeks after Edison's coal-fired plant.",
+    eng:"The Vulcan Street Plant used falling water to spin a turbine connected to a generator, about 12.5 kW. It is the same idea we still use: moving water spins a turbine, the turbine spins a generator, and that makes electricity. Edison's direct current (DC) couldn't travel far, so the later alternating-current (AC) system is what made a wide power grid possible." },
+  { year:1888, title:"First automatic wind turbine for electricity", cat:"wind", era:"curiosity",
+    short:"An inventor in Cleveland, USA, rewires a windmill so that instead of grinding grain, it charges batteries. Scotland's James Blyth built one in 1887, so who was 'first' is disputed.",
+    eng:"Charles Brush's machine had 144 blades and a 12 kW generator feeding a bank of batteries in his cellar. The chain is simple: wind spins the blades, the blades spin a generator, and the electricity charges batteries. There was no grid to send power to, so batteries were the only way to store an on-and-off source. Storing an on-and-off source is still the central problem today." },
+  { year:1904, title:"First electricity from the Earth's heat", cat:"geothermal", era:"curiosity",
+    short:"In Larderello, Italy, natural steam rising from the ground lights five bulbs: the first electricity from the Earth's heat. A larger 250 kW plant follows in 1913.",
+    eng:"Prince Piero Ginori Conti ran a small generator on steam that comes straight out of the hot ground. It is an ordinary steam engine; the only difference is that the heat comes from the planet instead of from burning fuel. Because the steam flows day and night, geothermal can run around the clock, unlike solar and wind." },
+  { year:1954, title:"The first practical silicon solar cell", cat:"solar", era:"strategic",
+    short:"Bell Labs, in the USA, builds the first solar cell good enough to actually power something: about 6% efficient, up from under 1%. It was still far too expensive for everyday use.",
+    eng:"Chapin, Fuller and Pearson built a silicon cell around a p-n junction, a built-in electrical boundary that pushes light-freed charges into a steady current. It worked, but it cost about $1,900 for every watt it could produce. In plain terms, a panel big enough to run one household lightbulb would have cost tens of thousands of dollars, so solar only made sense where nothing else could go. Panels today cost well under $1 per watt." },
+  { year:1958, title:"Solar goes to space", cat:"solar", era:"strategic",
+    short:"The US satellite Vanguard 1 runs on solar cells. Space was the one place cost didn't matter, and solar kept improving there for decades.",
+    eng:"In orbit you can't refuel and every kilogram is expensive to launch, so solar's high price didn't matter next to its weightless, fuel-free power. Space kept the solar industry alive and funded through the decades when solar on the ground was still too costly to bother with." },
+  { year:1966, title:"First large-scale tidal power station", cat:"ocean", era:"strategic",
+    short:"France builds the first large tidal power station, on the Rance river where it meets the sea. It generates 240 MW and stays the world's biggest tidal plant for 45 years.",
+    eng:"The plant is named after the Rance estuary in northern France, and it sits in a dam across the river mouth. As the tide rises and falls twice a day, seawater flows through 24 turbines in the dam and generates power. It proved tides can run a real power station, but it needs a rare kind of coastline and it changes the local ecosystem. Its big advantage is predictability: tides follow a clock, so unlike sun and wind you know exactly when the power will arrive." },
+  { year:1973, title:"The oil crisis makes energy a security issue", cat:"policy", era:"strategic", display:"1973",
+    short:"An oil embargo makes energy prices jump, and governments start funding energy that doesn't depend on imported fuel.",
+    eng:"This is where renewables shift from curiosity to national strategy. The first big government programs for solar and wind, along with efficiency rules and research money, all trace back to the oil shock of the 1970s. The technology didn't change here; the reason to pay for it did." },
+  { year:1980, title:"Turbines are ganged into wind farms", cat:"wind", era:"strategic", display:"1980s",
+    short:"Instead of one big turbine, many turbines are wired together into a 'wind farm' feeding the grid, first at Altamont Pass in California, USA.",
+    eng:"This set the model still used today: rows of turbines, each with its own generator, joined to the grid at one connection point. Their output is AC, so it has to match the grid's frequency and phase exactly. Matching frequency and phase is the core challenge of connecting any source to the grid." },
+  { year:1984, title:"Solar-thermal reaches utility scale (SEGS)", cat:"solar", era:"strategic", display:"1984",
+    short:"A second way to use the sun: instead of panels, curved mirrors focus sunlight to make heat and run a normal steam power plant. The SEGS plants in California, USA, are the first at full power-station size.",
+    eng:"SEGS (Solar Energy Generating Systems) lines up long curved mirrors that focus sunlight onto a pipe, heating the fluid inside until it can boil water into steam. The steam spins a turbine, exactly like a coal or gas plant, except the heat comes from the sun. Because it makes heat first, this kind of plant can store that heat and keep running after sunset, which ordinary panels can't. It has since been beaten on price by cheap panels plus batteries." },
+  { year:1991, title:"The first offshore wind farm", cat:"wind", era:"strategic",
+    short:"Denmark builds Vindeby, the first wind farm out at sea, where the wind blows stronger and steadier than on land.",
+    eng:"Vindeby, off the coast of Denmark, was small at about 5 MW from eleven turbines, but it solved the hard parts of building at sea: foundations underwater, power cables along the seabed, and salt-water corrosion. Offshore costs more to build but catches better wind, and it is now where the largest turbines, over 15 MW each, are placed." },
+  { year:2000, title:"Germany guarantees a price for green power", cat:"policy", era:"collapse",
+    short:"Germany passes a law promising anyone who generates renewable electricity guaranteed access to the grid and a fixed price for 20 years. Demand takes off.",
+    eng:"This kind of policy, a feed-in tariff, removed the risk from investing: a guaranteed price per unit of electricity made solar and wind projects safe to fund. That steady demand pushed factories to make far more panels and turbines, which set up the price crash that follows." },
+  { year:2012, title:"The solar cost collapse", cat:"solar", era:"collapse", display:"2010s",
+    short:"Over about ten years, solar's cost falls roughly 90%. It goes from one of the most expensive ways to make electricity to the cheapest.",
+    eng:"This is the turning point of the whole story. As more solar got built, each panel got cheaper, and cheaper panels led to even more being built. That loop dropped the cost of solar power by about 90% during the 2010s (IRENA). For the first time, choosing renewables was the cheapest option on price alone, not just the cleaner one. Almost everything after this point follows from that." },
+  { year:2015, title:"The Paris Agreement", cat:"policy", era:"collapse",
+    short:"Almost every country agrees to cut emissions, which creates steady long-term demand for clean power.",
+    eng:"For an engineer, the value of Paris is a durable signal: it promises decades of investment in renewables and grid upgrades. When you plan transmission lines or storage, that long-term direction is part of the forecast you build around." },
+  { year:2017, title:"Grid-scale batteries answer 'what about when the sun sets?'", cat:"storage", era:"collapse",
+    short:"A giant battery in South Australia stores renewable power and can release it in a fraction of a second to keep the grid steady.",
+    eng:"The Hornsdale battery (100 MW / 129 MWh) does two jobs: it saves midday solar to use at night, and it reacts within a fraction of a second to steady the grid when supply and demand slip out of balance. Batteries like this are the direct answer to the biggest complaint about solar and wind, that they only work when the sun shines or the wind blows." },
+  { year:2020, title:"Solar is declared the cheapest electricity in history", cat:"solar", era:"collapse",
+    short:"The International Energy Agency reports that at good sites, solar is now the cheapest electricity ever produced.",
+    eng:"The IEA's 2020 report put solar's cost below new coal and gas across most of the world. The price fall that began with Germany's guaranteed prices had crossed the line where renewables win on cost alone. That reversed the situation that had held since the effect was first seen in 1839." },
+  { year:2025, title:"Renewables pass coal, and the efficiency race picks up", cat:"solar", era:"collapse", display:"2025-26",
+    short:"Renewables overtake coal worldwide for the first time, cheap batteries make evening solar normal, and lab solar cells break long-standing efficiency records.",
+    eng:"Two things sped up after 2020. First, on the grid: renewables passed coal as a source of the world's electricity (Ember), with solar growing fastest, backed by batteries whose prices kept dropping (storage packs reached about $70/kWh in 2025, per BloombergNEF), cheap enough to store daytime solar for the evening. Second, in the lab: new 'tandem' cells that stack two light-absorbing layers broke the old efficiency ceiling for plain silicon, reaching 34.85% in 2025 and 35.5% in 2026 (LONGi), while the largest offshore wind turbines passed 20 MW each." },
+  { year:2027, title:"Integration becomes the real challenge", cat:"storage", era:"collapse", display:"2020s →",
+    short:"With solar and wind now cheap, the hard question changes to whether the grid can handle so much power that comes and goes with the weather.",
+    eng:"The focus shifts to fitting it all together: using storage and flexible demand to cover the gaps, and keeping the grid's voltage and frequency stable now that fewer heavy spinning generators are online to hold it steady. The main tools are grid-forming inverters, synthetic inertia, longer-lasting storage, and new transmission lines." },
+];
+
+/* ===================== GLOSSARY CONTENT ===================== */
+const GLOSSARY_GROUPS = ["Physics & solar devices","Generation concepts","Economics & policy","Power electronics & grid","Storage","Key figures"];
+const GLOSSARY = [
+  {g:"Physics & solar devices", t:"Photovoltaic (PV) effect", d:"Light knocking charge carriers loose in a material so they flow as current. Discovered by Edmond Becquerel in 1839; the basis of every solar cell.", ex:"A solar-powered calculator works this way: light hits it and it runs, with no battery and no moving parts."},
+  {g:"Physics & solar devices", t:"p–n junction", d:"The boundary between p-type and n-type silicon. Its built-in field separates light-freed charges into a usable current, which is the heart of a solar cell.", ex:"It acts as a one-way turnstile for electric charge, letting current out one way but not back."},
+  {g:"Physics & solar devices", t:"Shockley–Queisser limit", d:"The theoretical maximum efficiency (about 33.7%) of a single-layer silicon cell, set by how much of the sun's light one layer can absorb. Stacked cells beat it.", ex:"One net can only catch fish of certain sizes; stacking nets of different sizes catches more."},
+  {g:"Physics & solar devices", t:"PERC / TOPCon / heterojunction", d:"Successive silicon cell designs that squeeze out more efficiency by handling the cell surface and contacts better. Today's panels reach 22 to 24%.", ex:"Think of engine upgrades on the same car, each version wasting a little less."},
+  {g:"Physics & solar devices", t:"Perovskite–silicon tandem", d:"A second solar material stacked on top of silicon to catch light the silicon misses, pushing lab cells past the single-layer limit (35.5% certified, 2026).", ex:"Two pairs of sunglasses tuned to different colors block more light than one; the stacked layers do the same for sunlight."},
+  {g:"Generation concepts", t:"Base load", d:"The continuous minimum demand a grid must always meet. Traditionally served by always-on plants; now increasingly by renewables plus storage.", ex:"The fridge and clocks that draw power all day, every day, are the base load in a home."},
+  {g:"Generation concepts", t:"Capacity factor", d:"Actual energy produced divided by what the plant would make running flat out 24/7. Solar is about 15 to 25%, wind 30 to 50%, geothermal about 90%. A reality check on the nameplate rating.", ex:"A car rated for 200 km/h mostly sits in traffic, so its rating and its real average speed are very different."},
+  {g:"Generation concepts", t:"Concentrated solar power (CSP)", d:"Mirrors focus sunlight to make heat, which drives a normal steam turbine. Being heat-based, it can store energy as hot salt and run after dark, which panels can't.", ex:"A magnifying glass can burn paper with focused sunlight; here that focused heat boils water to spin a turbine."},
+  {g:"Generation concepts", t:"Dispatchable vs. variable", d:"Dispatchable sources (hydro, geothermal, gas, storage) turn up on command; variable sources (solar, wind) follow the weather. Integration is about bridging that gap.", ex:"A tap gives water when you turn it, while rain arrives on its own schedule. Dispatchable sources are the tap, variable ones the rain."},
+  {g:"Generation concepts", t:"Enhanced geothermal systems (EGS)", d:"A way to reach the Earth's heat where natural steam isn't available, by cracking hot dry rock and pumping water through it. It could open geothermal far beyond volcanic areas.", ex:"It amounts to making your own hot spring, pumping water down onto hot rock and bringing back steam."},
+  {g:"Generation concepts", t:"OTEC", d:"Ocean thermal energy conversion: an engine run on the temperature gap between warm surface water and cold deep water. Demonstrated by Georges Claude in 1930, but it has never reliably produced net power.", ex:"It runs an engine purely on the temperature difference between a warm bath and a cold one."},
+  {g:"Economics & policy", t:"Feed-in tariff (FiT)", d:"A policy guaranteeing renewable generators grid access and a fixed price per unit for years, which makes projects safe to fund. Germany's 2000 law is the classic example.", ex:"Imagine the government promising to buy every cup from your lemonade stand at a set price for 20 years; a bank would happily fund the stand."},
+  {g:"Economics & policy", t:"LCOE (levelized cost of electricity)", d:"The price per unit a plant must earn over its life to break even, spreading its build and running costs across all the energy it makes. The standard way to compare sources.", ex:"It is the true cost per kilometre of a car once you add up its price, fuel, and repairs over its whole life."},
+  {g:"Economics & policy", t:"Learning curve (Swanson's / Wright's law)", d:"The pattern that solar's cost drops about 20% each time total production doubles. Repeated over decades, it is why solar collapsed in price.", ex:"Flat-screen TVs followed the same path: the more the world made, the cheaper each one got."},
+  {g:"Power electronics & grid", t:"Fast frequency response", d:"Injecting or absorbing power within a fraction of a second to stop a frequency swing. Grid batteries like Hornsdale do this faster than fuel-burning plants.", ex:"It works like tapping the brakes the instant the car drifts, before it leaves the lane."},
+  {g:"Power electronics & grid", t:"Grid-following inverter", d:"An inverter that locks onto the grid's existing voltage and frequency and pushes current in step with it. Cheap and common, but it needs a stable grid already there.", ex:"It behaves like a dancer following a partner's lead, needing the rhythm to already be there."},
+  {g:"Power electronics & grid", t:"Grid-forming inverter", d:"An inverter that sets its own voltage and frequency, so it can steady the grid, ride through faults, restart a dead grid, and run on its own. The key enabler of very-high-renewable grids.", ex:"It is the dancer who sets the rhythm, so the dance can start even with no one else leading."},
+  {g:"Power electronics & grid", t:"Inertia (rotational)", d:"Energy stored in the spinning masses of conventional generators that instantly resists any change in grid frequency. Solar and wind provide none on their own.", ex:"A heavy merry-go-round, once spinning, takes real effort to speed up or slow down suddenly; that resistance is inertia."},
+  {g:"Power electronics & grid", t:"Inverter", d:"Power electronics that turn the DC from panels and batteries into the AC the grid uses. Every non-spinning renewable source reaches the grid through one.", ex:"It works like a translator, turning the DC 'language' of panels into the AC the grid speaks."},
+  {g:"Power electronics & grid", t:"Inverter-based resource (IBR)", d:"Any source that reaches the grid through an inverter rather than a spinning machine: solar, batteries, most modern wind. It provides no inertia on its own.", ex:"Picture a source that only talks to the grid through that translator, with no heavy spinning wheel of its own."},
+  {g:"Power electronics & grid", t:"RoCoF (rate of change of frequency)", d:"How fast grid frequency moves after a sudden imbalance. Low inertia means a higher RoCoF, which means faster and more dangerous swings. It is the core stability problem on high-renewables grids.", ex:"It measures how sharply the merry-go-round jerks when someone grabs it; less weight means a nastier jolt."},
+  {g:"Power electronics & grid", t:"Synchronous generator", d:"The rotating machine behind conventional power. Its spinning mass is physically locked to grid frequency and provides inertia for free.", ex:"A heavy spinning wheel tied to the grid's beat, its weight naturally resisting sudden changes."},
+  {g:"Power electronics & grid", t:"Synthetic / virtual inertia", d:"Fast inverter control that imitates the steadying effect of a spinning generator, letting batteries and wind supply inertia the grid no longer gets from fuel plants.", ex:"A battery can pretend to be that heavy wheel, using quick electronics instead of real spinning mass."},
+  {g:"Storage", t:"Lithium-ion battery", d:"The dominant grid battery. Pack prices fell about 93% since 2010, enabling grid-scale energy shifting plus fast frequency and inertia services.", ex:"It is the same kind of battery in your phone, scaled up to help power a town."},
+  {g:"Storage", t:"Long-duration energy storage (LDES)", d:"Storage that can run for many hours or days, such as flow batteries, compressed air, heat, or hydrogen. It covers the multi-day lulls that lithium-ion can't affordably span.", ex:"A large reservoir carries you through a dry week, where a small tank lasts only a few hours."},
+  {g:"Storage", t:"Pumped-storage hydro (PSH)", d:"Pumps water uphill when power is cheap and lets it fall back through turbines when needed. Still about 90% of the world's grid storage; 70 to 85% efficient.", ex:"You carry water uphill when power is cheap, then let it fall to make power when you need it."},
+  {g:"Storage", t:"Round-trip efficiency", d:"How much energy you get back out of storage compared with what you put in. Lithium-ion is about 85 to 95%, pumped hydro 70 to 85%, hydrogen much lower.", ex:"A slightly leaky bucket loses a little water each time you fill it and pour it out; storage loses a little energy the same way."},
+  {g:"Key figures", sk:"Becquerel", t:"Edmond Becquerel", d:"French physicist who, at 19 in 1839, first observed the photovoltaic effect, the foundation of all solar cells. Often confused with his father Antoine-César or his son Henri, who discovered radioactivity."},
+  {g:"Key figures", sk:"Brush", t:"Charles Brush", d:"Cleveland inventor whose 1888 machine was the first automatically operated wind-electric turbine (12 kW, 144 blades). Scotland's James Blyth built one in 1887, so the 'first' is disputed."},
+  {g:"Key figures", sk:"Chapin", t:"Chapin, Fuller & Pearson", d:"The Bell Labs team (an engineer, a chemist, and a physicist) who built the first practical silicon solar cell in 1954 at about 6% efficiency, the ancestor of every modern panel."},
+  {g:"Key figures", sk:"Claude", t:"Georges Claude", d:"French engineer who built the first ocean thermal energy conversion (OTEC) plant in Cuba in 1930. It proved the concept but used more power than it produced."},
+  {g:"Key figures", sk:"Fritts", t:"Charles Fritts", d:"American inventor who built the first true solar cells from selenium in 1883, at about 1% efficiency. They were the first solid-state photovoltaic devices, decades before silicon."},
+  {g:"Key figures", sk:"Ginori Conti", t:"Piero Ginori Conti", d:"Italian prince who generated the first geothermal electricity at Larderello, Italy, in 1904, lighting five bulbs from natural steam. A 250 kW plant followed in 1913."},
+];
+
+/* ===================== RENDER: TIMELINE ===================== */
+const ESC_MAP={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+function esc(s){ return String(s).replace(/[&<>"']/g, c=>ESC_MAP[c]); }
+
+const active = new Set(Object.keys(CATEGORIES));
+const filters = document.getElementById('filters');
+Object.entries(CATEGORIES).forEach(([key,c])=>{
+  const b=document.createElement('button');
+  b.className='chip';b.type='button';b.setAttribute('aria-pressed','true');
+  b.dataset.cat=key;b.style.setProperty('--cat',c.color);
+  b.innerHTML='<span class="dot"></span>'+esc(c.label);
+  b.addEventListener('click',()=>{
+    if(active.has(key)){active.delete(key);b.setAttribute('aria-pressed','false');}
+    else{active.add(key);b.setAttribute('aria-pressed','true');}
+    renderTimeline();
+  });
+  filters.appendChild(b);
+});
+const tl=document.getElementById('timeline');
+
+/* Extra top margin between consecutive entries, scaled by the real year gap
+   between them, so long dormant stretches still read as longer than
+   rapid-fire years. Uses a square-root curve rather than a straight
+   multiplier so a rare multi-decade gap (e.g. 1839->1882) doesn't dwarf the
+   typical few-year gaps between the rest of the entries. */
+function gapPx(years){ return Math.min(2.5*Math.sqrt(Math.max(years,0)), 60); }
+
+function renderTimeline(){
+  [...tl.querySelectorAll('.era,.item')].forEach(n=>n.remove());
+  ERAS.forEach(era=>{
+    const items=MILESTONES.filter(m=>m.era===era.id && active.has(m.cat)).sort((a,b)=>a.year-b.year);
+    if(!items.length) return;
+    const eh=document.createElement('div');eh.className='era';
+    eh.innerHTML='<h2>'+esc(era.label)+'</h2><p>'+esc(era.sub)+'</p>';
+    tl.appendChild(eh);
+    let localPrev=null;
+    items.forEach(m=>{
+      const cat=CATEGORIES[m.cat];
+      const wrap=document.createElement('div');wrap.className='item';
+      wrap.style.setProperty('--cat',cat.color);
+      if(localPrev!==null) wrap.style.marginTop=gapPx(m.year-localPrev)+'px';
+      wrap.innerHTML=
+        '<div class="year mono">'+esc(m.display||m.year)+'</div>'+
+        '<div class="node"></div>'+
+        '<div class="card"><button class="card-btn" aria-expanded="false">'+
+          '<span class="tag">'+esc(cat.label)+'</span>'+
+          '<span class="card-body"><span class="card-title">'+esc(m.title)+'</span>'+
+          '<span class="card-short">'+esc(m.short)+'</span></span>'+
+          '<svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+        '</button><div class="eng" aria-hidden="true"><div class="eng-inner">'+
+          '<p>'+esc(m.eng)+'</p>'+
+        '</div></div></div>';
+      const card=wrap.querySelector('.card'),btn=wrap.querySelector('.card-btn'),eng=wrap.querySelector('.eng');
+      btn.addEventListener('click',()=>{
+        const o=card.classList.toggle('open');
+        btn.setAttribute('aria-expanded',o?'true':'false');
+        eng.setAttribute('aria-hidden',o?'false':'true');
+      });
+      tl.appendChild(wrap);
+      localPrev=m.year;
+    });
+  });
+  if(!tl.querySelector('.item')){
+    const e=document.createElement('div');e.className='item';e.style.paddingLeft='96px';
+    e.innerHTML='<div class="card"><div class="card-btn" style="cursor:default"><span class="card-body"><span class="card-title">No technologies selected</span><span class="card-short">Turn a filter back on above to see the timeline.</span></span></div></div>';
+    tl.appendChild(e);
+  }
+}
+renderTimeline();
+
+/* ===================== RENDER: GLOSSARY ===================== */
+const gWrap=document.getElementById('glossary');
+GLOSSARY_GROUPS.forEach(gn=>{
+  const terms=GLOSSARY.filter(x=>x.g===gn).sort((a,b)=>(a.sk||a.t).localeCompare(b.sk||b.t));
+  if(!terms.length) return;
+  const grp=document.createElement('div');grp.className='group';grp.dataset.group=gn;
+  let html='<h3>'+esc(gn)+'</h3><dl>';
+  terms.forEach(x=>{html+='<div class="term"><dt>'+esc(x.t)+'</dt><dd>'+esc(x.d)+'</dd>'+(x.ex?'<div class="term-ex">'+esc(x.ex)+'</div>':'')+'</div>';});
+  html+='</dl>';grp.innerHTML=html;gWrap.appendChild(grp);
+});
+const gsearch=document.getElementById('gsearch'),gnone=document.getElementById('gnone');
+gsearch.addEventListener('input',()=>{
+  const q=gsearch.value.trim().toLowerCase();let any=false;
+  gWrap.querySelectorAll('.group').forEach(grp=>{
+    let shown=0;
+    grp.querySelectorAll('.term').forEach(t=>{
+      const hit=t.textContent.toLowerCase().includes(q);
+      t.classList.toggle('hidden',!hit);if(hit)shown++;
+    });
+    grp.classList.toggle('hidden',shown===0);if(shown)any=true;
+  });
+  gnone.hidden=any;
+});
+
+const exBtn=document.getElementById('extoggle');
+exBtn.addEventListener('click',()=>{
+  const on=exBtn.getAttribute('aria-checked')==='true';
+  exBtn.setAttribute('aria-checked', on?'false':'true');
+  gWrap.classList.toggle('hide-ex', on);
+});
+
+/* ===================== TABS ===================== */
+const tabs=[...document.querySelectorAll('.tab')];
+tabs.forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    tabs.forEach(t=>t.setAttribute('aria-selected','false'));
+    tab.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(p=>p.hidden=true);
+    document.getElementById('tab-'+tab.dataset.tab).hidden=false;
+    window.scrollTo({top:0,behavior:'instant' in window?'instant':'auto'});
+  });
+});
+
+/* ===================== BACK TO TOP ===================== */
+const backToTop=document.getElementById('backtotop');
+function updateBackToTop(){ backToTop.classList.toggle('show', window.scrollY>500); }
+window.addEventListener('scroll', updateBackToTop, {passive:true});
+updateBackToTop();
+backToTop.addEventListener('click', ()=>{
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+</script>
+</body>
+</html>
