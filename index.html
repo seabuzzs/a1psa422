@@ -177,6 +177,9 @@ h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webki
 .eng{max-height:0;overflow:hidden;transition:max-height .28s ease;border-top:1px solid transparent}
 .card.open .eng{max-height:460px;border-top-color:var(--line)}
 .eng-inner{padding:14px 17px 16px}
+.empty-state{display:flex;justify-content:center;padding:24px 0}
+.empty-state .card{max-width:320px;width:100%}
+.empty-state .card-btn{justify-content:center;text-align:center;flex-direction:column;align-items:center;gap:4px}
 .eng-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cat,var(--muted));font-weight:700;margin-bottom:6px}
 .eng-inner p{font-size:14px;color:var(--card-desc)}
 
@@ -555,7 +558,7 @@ const tl=document.getElementById('timeline');
 function gapPx(years){ return Math.min(2.5*Math.sqrt(Math.max(years,0)), 60); }
 
 function renderTimeline(){
-  [...tl.querySelectorAll('.era,.item')].forEach(n=>n.remove());
+  [...tl.querySelectorAll('.era,.item,.empty-state')].forEach(n=>n.remove());
   ERAS.forEach(era=>{
     const items=MILESTONES.filter(m=>m.era===era.id && active.has(m.cat)).sort((a,b)=>a.year-b.year);
     if(!items.length) return;
@@ -589,8 +592,10 @@ function renderTimeline(){
       localPrev=m.year;
     });
   });
-  if(!tl.querySelector('.item')){
-    const e=document.createElement('div');e.className='item';e.style.paddingLeft='96px';
+  const hasItems=!!tl.querySelector('.item');
+  tl.querySelector('.spine').style.display=hasItems?'':'none';
+  if(!hasItems){
+    const e=document.createElement('div');e.className='empty-state';
     e.innerHTML='<div class="card"><div class="card-btn" style="cursor:default"><span class="card-body"><span class="card-title">No technologies selected</span><span class="card-short">Turn a filter back on above to see the timeline.</span></span></div></div>';
     tl.appendChild(e);
   }
