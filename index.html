@@ -589,8 +589,10 @@ function renderTimeline(){
       localPrev=m.year;
     });
   });
-  if(!tl.querySelector('.item')){
-    const e=document.createElement('div');e.className='item';e.style.paddingLeft='96px';
+  const hasItems=!!tl.querySelector('.item');
+  tl.querySelector('.spine').style.display=hasItems?'':'none';
+  if(!hasItems){
+    const e=document.createElement('div');e.className='item';
     e.innerHTML='<div class="card"><div class="card-btn" style="cursor:default"><span class="card-body"><span class="card-title">No technologies selected</span><span class="card-short">Turn a filter back on above to see the timeline.</span></span></div></div>';
     tl.appendChild(e);
   }
