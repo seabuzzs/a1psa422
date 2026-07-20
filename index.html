@@ -96,7 +96,7 @@ h1{font-size:clamp(28px,5vw,50px);font-weight:800;letter-spacing:-.02em;line-hei
 h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webkit-background-clip:text;background-clip:text;color:transparent}
 .thesis{margin-top:20px;font-size:16.5px;color:var(--thesis)}
 .thesis b{color:var(--text);font-weight:600}
-.frame{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
+.frame{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:26px}
 .frame .cell{background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--line);border-radius:10px;padding:13px 17px;min-width:150px}
 .frame .num{font-family:"SF Mono",SFMono-Regular,ui-monospace,"Roboto Mono",Consolas,Menlo,monospace;font-size:22px;font-weight:700;letter-spacing:-.01em}
 .frame .num.a{color:var(--muted)} .frame .num.b{color:var(--solar)}
@@ -146,7 +146,7 @@ h1 .glow{background:linear-gradient(90deg,var(--solar),var(--geothermal));-webki
 .chip:focus-visible{outline:2px solid var(--wind);outline-offset:2px}
 
 /* ---------- timeline ---------- */
-.timeline{padding:20px 28px 0;position:relative}
+.timeline{padding:20px 28px 0;position:relative;margin-left:9px}
 .spine{position:absolute;left:calc(28px + 78px);top:30px;bottom:40px;width:2px;
   background:linear-gradient(to bottom,var(--line) 0%,var(--line) 8%,#3a4a6e 55%,var(--solar) 100%);opacity:.5}
 :root[data-theme="light"] .spine{opacity:.3}
